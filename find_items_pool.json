@@ -3,7 +3,8 @@
     "may_contain_adult_content": true,
     "assignment_max_duration_seconds": 300,
     "defaults": {
-        "default_overlap_for_new_task_suites": 1
+        "default_overlap_for_new_task_suites": 5,
+        "default_overlap_for_new_tasks": 5
     },
     "auto_close_after_complete_delay_seconds": 0,
     "auto_accept_solutions": false,
@@ -90,5 +91,8 @@
         "golden_tasks_count": 0,
         "training_tasks_count": 0
     },
-    "type": "REGULAR"
+    "project_id": "77582",
+    "reward_per_assignment": 0.08,
+    "type": "REGULAR",
+    "will_expire": "2022-02-12T00:06:16.161269"
 }
