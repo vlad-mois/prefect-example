@@ -1,5 +1,5 @@
 {
-    "public_name": "Find a similar item in an online store 2",
+    "public_name": "Find a similar item in an online store",
     "public_description": "Go to M&S online and find similar shoes on the website",
     "task_spec": {
         "input_spec": {
@@ -41,5 +41,5 @@
     "assignments_issuing_type": "AUTOMATED",
     "assignments_automerge_enabled": false,
     "public_instructions": "\nLook at the shoes the person is wearing in the picture. \nGo to M&amp;S online store and find the same or similar pair of shoes on the website.\nThe shoes should be similar in color, style or height.\n",
-    "private_comment": "streaming_piplines example find_items_project"
+    "private_comment": "Prefect example project"
 }

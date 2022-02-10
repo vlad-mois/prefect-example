@@ -52,5 +52,5 @@
     "assignments_issuing_type": "AUTOMATED",
     "assignments_automerge_enabled": false,
     "public_instructions": "\nTake a look at 2 pictures. Decide whether the shoes look similar or not.\n<div><br />\n  <div>The shoes look similar if they are the same or <b>similar color, fabric and style</b>.</div>\n  <div>If you do not see any shoes in the pictures choose <b>No</b></div>\n</div>\n",
-    "private_comment": "streaming_piplines example verification_project"
+    "private_comment": "Prefect example verification project"
 }
