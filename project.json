@@ -13,7 +13,7 @@
             "found_link": {
                 "required": true,
                 "hidden": false,
-                "type": "string"
+                "type": "url"
             }
         },
         "view_spec": {

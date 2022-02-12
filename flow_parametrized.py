@@ -53,8 +53,8 @@ with Flow('some-sqlite-flow') as flow:
     source = Parameter('source', 'images')
     destination = Parameter('destination', 'results')
     processing = Parameter('processing', 'processing')
-    project_id = Parameter('project_id', '77582')
-    ver_project_id = Parameter('ver_project_id', '77585')
+    project_id = Parameter('project_id', '78750')
+    ver_project_id = Parameter('ver_project_id', '78751')
 
     query_move = StringFormatter('''
         INSERT INTO {processing} SELECT "{flow_run_id}", url FROM {source};
