@@ -68,7 +68,7 @@ with Flow('some-sqlite-flow') as flow:
     with case(NotEqual()(rows, []), True):
 
         pool_conf = download_json('https://raw.githubusercontent.com/vlad-mois/prefect-example/main/pool.json')
-        pool = tlk.create_pool(pool_conf, project_id=project_id, expiration=timedelta(days=1))
+        pool = tlk.create_pool(pool_conf, project_id=project_id, expiration=timedelta(hours=6))
 
         tasks = FunctionTask(lambda row: {'input_values': {'image': row[0]}}).map(rows)
 
@@ -78,7 +78,7 @@ with Flow('some-sqlite-flow') as flow:
         assignments = tlk.get_assignments(pool, status='SUBMITTED', upstream_tasks=[pool_done])
 
         ver_pool_conf = download_json('https://raw.githubusercontent.com/vlad-mois/prefect-example/main/ver_pool.json')
-        ver_pool = tlk.create_pool(ver_pool_conf, project_id=ver_project_id, expiration=timedelta(days=1))
+        ver_pool = tlk.create_pool(ver_pool_conf, project_id=ver_project_id, expiration=timedelta(hours=6))
 
         ver_tasks = prepare_verification_tasks(assignments)
 
