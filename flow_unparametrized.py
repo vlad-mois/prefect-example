@@ -53,12 +53,12 @@ SOURCE = 'images'
 PROCESSING = 'processing'
 DESTINATION = 'results'
 POOL_CONF_URL = 'https://raw.githubusercontent.com/vlad-mois/prefect-example/main/pool.json'
-VER_POOL_CONF_URL = 'https://raw.githubusercontent.com/vlad-mois/prefect-example/main/ver_pool.json'
+VER_POOL_CONF_URL = 'https://raw.githubusercontent.com/vlad-mois/prefect-example/main/val_pool.json'
 
 
 with Flow('some-sqlite-flow') as flow:
     project_id = Parameter('project_id', '78750')
-    ver_project_id = Parameter('ver_project_id', '78751')
+    val_project_id = Parameter('val_project_id', '78751')
 
     query_move = StringFormatter(f'INSERT INTO {PROCESSING} SELECT "{{flow_run_id}}", url FROM {SOURCE};'
                                  f'DELETE FROM {SOURCE};')()
@@ -79,19 +79,19 @@ with Flow('some-sqlite-flow') as flow:
 
         assignments = tlk.get_assignments(pool, status='SUBMITTED', upstream_tasks=[pool_done])
 
-        ver_pool_conf = download_json(VER_POOL_CONF_URL)
-        ver_pool = tlk.create_pool(ver_pool_conf, project_id=ver_project_id, expiration=timedelta(hours=6))
+        val_pool_conf = download_json(VER_POOL_CONF_URL)
+        val_pool = tlk.create_pool(val_pool_conf, project_id=val_project_id, expiration=timedelta(hours=6))
 
-        ver_tasks = prepare_verification_tasks(assignments)
+        val_tasks = prepare_verification_tasks(assignments)
 
-        ver_upload = tlk.create_tasks(ver_tasks, pool_id=ver_pool, allow_defaults=True)
-        ver_done = tlk.wait_pool(ver_pool, open_pool=True, upstream_tasks=[ver_upload])
+        val_upload = tlk.create_tasks(val_tasks, pool_id=val_pool, allow_defaults=True)
+        val_done = tlk.wait_pool(val_pool, open_pool=True, upstream_tasks=[val_upload])
 
         to_aggregate = FunctionTask(lambda df: df.rename(columns={
             'INPUT:assignment_id': 'task',
             'OUTPUT:result': 'label',
             'ASSIGNMENT:worker_id': 'performer'})
-        )(tlk.get_assignments_df(ver_pool, upstream_tasks=[ver_done]))
+        )(tlk.get_assignments_df(val_pool, upstream_tasks=[val_done]))
 
         aggregated = FunctionTask(MajorityVote().fit_predict)(to_aggregate)
         to_accept = FunctionTask(lambda agg: [a_id for a_id, res in agg.items() if res == 'Yes'])(
