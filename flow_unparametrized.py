@@ -48,7 +48,7 @@ def select_non_accepted_urls(accepted: List[str], assignments: List[Assignment])
     return [(url,) for url in urls_unclear - urls_accepted]
 
 
-DB = '/tmp/prefect_example.db'
+DB = '/tmp/prefect-example/prefect_example.db'
 SOURCE = 'images'
 PROCESSING = 'processing'
 DESTINATION = 'results'
@@ -90,7 +90,7 @@ with Flow('some-sqlite-flow') as flow:
         to_aggregate = FunctionTask(lambda df: df.rename(columns={
             'INPUT:assignment_id': 'task',
             'OUTPUT:result': 'label',
-            'ASSIGNMENT:worker_id': 'performer'})
+            'ASSIGNMENT:worker_id': 'worker'})
         )(tlk.get_assignments_df(val_pool, upstream_tasks=[val_done]))
 
         aggregated = FunctionTask(MajorityVote().fit_predict)(to_aggregate)
